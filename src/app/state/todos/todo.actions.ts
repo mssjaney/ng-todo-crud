@@ -14,3 +14,13 @@ export const deleteTodo = createAction (
 export const loadTodos = createAction (
     '[Todo List] Load Todos'
 );
+
+export const loadTodosSuccess = createAction (
+    '[Todo API] Load Todos Success',
+    props<{ todos: Todo[] }>()
+);
+
+export const loadTodosFail = createAction (
+    '[Todo API] Load Todos Fail',
+    props<{ error: string }>()
+);
