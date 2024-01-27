@@ -1,1 +1,12 @@
-<p>todo works!</p>
+<div>
+    <h2>Your Todo List App</h2>
+    <input [(ngModel)]="todo" type="text" placeholder="create todo">
+    <button (click)="createTodo()">Create Todo</button>
+
+    <ul>
+        <li *ngFor="let todo of allTodos$ | async">
+            <label>{{ todo.content }}</label>
+            <button (click)="deleteTodo(todo)">Delete Todo</button>
+        </li>
+    </ul>
+</div>
