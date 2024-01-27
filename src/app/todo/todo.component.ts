@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { createTodo, deleteTodo, loadTodos } from '../state/todos/todo.actions';
-import { selectAllTodos } from '../state/todos/todo.selectors';
+import { Store, select } from '@ngrx/store';
+import { createTodo, deleteTodo, loadTodos, setSearchTerm } from '../state/todos/todo.actions';
+import { selectAllTodos, selectFilteredTodos, selectSearchTerm } from '../state/todos/todo.selectors';
 import { Todo } from './todo.model';
 import { AppState } from '../state/app.state';
 
@@ -11,13 +11,19 @@ import { AppState } from '../state/app.state';
   styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent implements OnInit {
-  public allTodos$ = this.store.select(selectAllTodos);
+  public allTodos$ = this.store.select(selectFilteredTodos);
   public todo = '';
+  public searchTerm = '';
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.store.dispatch(loadTodos());
+    
+    this.store.pipe(select(selectSearchTerm))
+      .subscribe((term) => {
+        this.searchTerm = term;
+    });
   }
 
   createTodo() {
@@ -27,5 +33,9 @@ export class TodoComponent implements OnInit {
 
   deleteTodo(todo: Todo) {
     this.store.dispatch(deleteTodo({ id: todo.id }));
+  }
+
+  searchTodos() {
+    this.store.dispatch(setSearchTerm({ term: this.searchTerm }));
   }
 }

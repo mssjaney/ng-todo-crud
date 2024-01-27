@@ -4,18 +4,22 @@ import {
     deleteTodo,
     loadTodos,
     loadTodosSuccess,
-    loadTodosFail
+    loadTodosFail,
+    setSearchTerm,
+    clearSearchTerm
 } from "./todo.actions";
 import { Todo } from "../../todo/todo.model";
 
 export interface TodoState {
     todos: Todo[];
+    searchTerm: string;
     error: string | null;
     status: 'pending' | 'loading' | 'error' | 'success';
 }
 
 export const initialState: TodoState = {
     todos: [],
+    searchTerm: '',
     error: null,
     status: 'pending'
 }
@@ -35,11 +39,19 @@ export const todoReducer = createReducer (
         ...state,
         todos: todos,
         error: null,
-        status: <'success'> 'success'
+        status: <'success'> 'success',
     })),
     on(loadTodosFail, (state, { error }) => ({
         ...state,
         error: error,
-        status: <'error'> 'error'
+        status: <'error'> 'error',
+    })),
+    on(setSearchTerm, (state, { term }) => ({
+        ...state,
+        searchTerm: term,
+    })),
+    on(clearSearchTerm, (state) => ({
+        ...state,
+        searchTerm: '',
     }))
 )

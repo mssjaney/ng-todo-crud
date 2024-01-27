@@ -24,3 +24,12 @@ export const loadTodosFail = createAction (
     '[Todo API] Load Todos Fail',
     props<{ error: string }>()
 );
+
+export const setSearchTerm = createAction (
+    '[Todo Search] Set Search Term',
+    props<{ term: string }>()
+);
+
+export const clearSearchTerm = createAction(
+    '[Todo Search] Clear Search Term'
+);
