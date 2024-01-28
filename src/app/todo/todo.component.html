@@ -1,6 +1,8 @@
 <div>
     <h2>Your Todo List App</h2>
 
+    <app-progressbar [progress]="cumulativeProgress"></app-progressbar>
+
     <div>
         <input [(ngModel)]="searchTerm" (input)="searchTodos()" type="text" placeholder="Search">
     </div>

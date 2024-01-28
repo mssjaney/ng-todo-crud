@@ -15,6 +15,8 @@ export class TodoComponent implements OnInit {
   public todo = '';
   public searchTerm = '';
 
+  public cumulativeProgress: {[key: string]: number} = {};
+
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
@@ -24,6 +26,8 @@ export class TodoComponent implements OnInit {
       .subscribe((term) => {
         this.searchTerm = term;
     });
+
+    this.calculateCumulativeProgress();
   }
 
   createTodo() {
@@ -41,5 +45,22 @@ export class TodoComponent implements OnInit {
 
   searchTodos() {
     this.store.dispatch(setSearchTerm({ term: this.searchTerm }));
+  }
+
+  calculateCumulativeProgress(): void {
+    this.allTodos$.subscribe((todos) => {
+      this.cumulativeProgress = {
+        completed: this.calculateStatusPercentage(todos, 'completed'),
+        deleted: this.calculateStatusPercentage(todos, 'deleted'),
+        postponed: this.calculateStatusPercentage(todos, 'postponed'),
+      }
+    });
+  }
+
+  calculateStatusPercentage(todos: Todo[], status: string): number {
+    const totalTodos = todos.length;
+    const statusTodos = todos.filter((todo) => todo.progress === status).length;
+    
+    return (statusTodos / totalTodos) * 100 || 0;
   }
 }

@@ -1,0 +1,7 @@
+<div class="progress">
+    <div
+      *ngFor="let status of statuses"
+      [style.width.%]="getProgressPercentage(status)"
+      [class]="getStatusClass(status)">
+    </div>
+</div>
