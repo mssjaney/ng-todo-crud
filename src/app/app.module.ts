@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { AppComponent } from './app.component';
 import { TodoComponent } from './todo/todo.component';
 import { ProgressbarComponent } from './progress/progressbar/progressbar.component';
@@ -27,6 +29,7 @@ import { TodoEffects } from './state/todos/todo.effects';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    DragDropModule,
     IonicStorageModule.forRoot(),
     StoreModule.forRoot({ todos: todoReducer }),
     StoreDevtoolsModule.instrument({

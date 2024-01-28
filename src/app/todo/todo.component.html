@@ -37,7 +37,7 @@
 
                 <div class="accordion-body">
                     <div class="list-group">
-                        <li class="list-group-item todo-item d-flex">
+                        <li class="list-group-item todo-item d-flex" cdkDrag>
                             <label class="p-2 flex-grow-1">{{ todo.content }}</label>
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-sm btn-danger" (click)="deleteTodo(todo)">
