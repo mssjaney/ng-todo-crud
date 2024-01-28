@@ -13,7 +13,7 @@ export const deleteTodo = createAction (
 
 export const updateTodo = createAction (
     '[Todo List] Update Todo',
-    props<{ id: string; progress: 'active' | 'completed' | 'deleted' | 'postponed' }>()
+    props<{ id: string; progress: 'active' | 'completed' | 'postponed' }>()
 );
 
 export const loadTodos = createAction (

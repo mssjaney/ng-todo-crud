@@ -1,23 +1,63 @@
-<div>
-    <h2>Your Todo List App</h2>
+<div class="container mt-5">
+    <h1 class="display-4 text-center">Your Personal To Do List</h1>
+
+    <div class="mt-5 d-flex justify-content-end display-7">
+        {{ currentDate | date:'EEE' }} {{ currentDate | date:'short' }} 
+    </div>
 
     <app-progressbar [progress]="cumulativeProgress"></app-progressbar>
 
-    <div>
-        <input [(ngModel)]="searchTerm" (input)="searchTodos()" type="text" placeholder="Search">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="searchTodos()" placeholder="search for todo">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
     </div>
 
-    <input [(ngModel)]="todo" type="text" placeholder="create todo">
-    <button (click)="createTodo()">Create Todo</button>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="todo" placeholder="create todo">
+        <button class="btn btn-success" type="button" id="button-addon2" (click)="createTodo()"><i class="bi bi-plus"></i></button>
+    </div>
 
-    <ul>
-        <li *ngFor="let todo of allTodos$ | async">
-            <label>{{ todo.content }} - progress: {{ todo.progress }}</label>
-            <button (click)="updateProgress(todo.id, 'deleted')">X</button>
-            <button (click)="updateProgress(todo.id, 'postponed')">II</button>
-            <button (click)="updateProgress(todo.id, 'completed')">V</button>
+    <div class="accordion" *ngIf="allTodos$ | async as todos">
+        <div class="accordion-item" *ngFor="let status of todoStatuses; let index = index;">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              aria-expanded="true"
+              aria-controls="accordion-panel-' + index"
+              [attr.data-bs-target]="'#accordion-panel-' + index">
+              {{ status | titlecase }} Todos
+            </button>
+          </h2>
+
+          <div *ngFor="let todo of getTodosByStatus(todos, status); let i = index" 
+                class="accordion-collapse collapse show"
+                [attr.id]="'accordion-panel-' + index">
+
+                <div class="accordion-body">
+                    <div class="list-group">
+                        <li class="list-group-item todo-item d-flex">
+                            <label class="p-2 flex-grow-1">{{ todo.content }}</label>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm btn-danger" (click)="deleteTodo(todo)">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-warning" (click)="updateProgress(todo.id, 'postponed')">
+                                    <i class="bi bi-pause"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success" (click)="updateProgress(todo.id, 'completed')">
+                                    <i class="bi bi-check2"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+          </div>
+        </div>
+    </div>
       
-            <button (click)="deleteTodo(todo)">Delete Todo</button>
-        </li>
-    </ul>
+    <div class="d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-sm btn-danger" (click)="clearAllTodos()">Clear All Todos</button>
+    </div>
 </div>

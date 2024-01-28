@@ -21,4 +21,8 @@ export class TodoService {
 
     return this.storage.set('todos', todos);
   }
+
+  clearAllTodos() {
+    this.storage.clear();
+  }
 }
