@@ -5,7 +5,8 @@ import {
     deleteTodo,
     loadTodos,
     loadTodosSuccess,
-    loadTodosFail
+    loadTodosFail,
+    updateTodo
 } from "./todo.actions";
 import { TodoService } from "src/app/todo/todo.service";
 import { of, from } from "rxjs";
@@ -36,7 +37,7 @@ export class TodoEffects {
 
     saveTodos$ = createEffect(() => 
         this.actions$.pipe(
-            ofType(createTodo, deleteTodo),
+            ofType(createTodo, deleteTodo, updateTodo),
             withLatestFrom(this.store.select(selectAllTodos)),
             switchMap(([action, todos]) => from(this.todoService.saveTodos(todos)))
         ),

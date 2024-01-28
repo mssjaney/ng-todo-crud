@@ -1,6 +1,6 @@
 <div>
     <h2>Your Todo List App</h2>
-    
+
     <div>
         <input [(ngModel)]="searchTerm" (input)="searchTodos()" type="text" placeholder="Search">
     </div>
@@ -10,7 +10,11 @@
 
     <ul>
         <li *ngFor="let todo of allTodos$ | async">
-            <label>{{ todo.content }}</label>
+            <label>{{ todo.content }} - progress: {{ todo.progress }}</label>
+            <button (click)="updateProgress(todo.id, 'deleted')">X</button>
+            <button (click)="updateProgress(todo.id, 'postponed')">II</button>
+            <button (click)="updateProgress(todo.id, 'completed')">V</button>
+      
             <button (click)="deleteTodo(todo)">Delete Todo</button>
         </li>
     </ul>

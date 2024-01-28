@@ -11,6 +11,11 @@ export const deleteTodo = createAction (
     props<{ id: string }>()
 );
 
+export const updateTodo = createAction (
+    '[Todo List] Update Todo',
+    props<{ id: string; progress: 'active' | 'completed' | 'deleted' | 'postponed' }>()
+);
+
 export const loadTodos = createAction (
     '[Todo List] Load Todos'
 );

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { createTodo, deleteTodo, loadTodos, setSearchTerm } from '../state/todos/todo.actions';
+import { createTodo, deleteTodo, loadTodos, setSearchTerm, updateTodo } from '../state/todos/todo.actions';
 import { selectAllTodos, selectFilteredTodos, selectSearchTerm } from '../state/todos/todo.selectors';
 import { Todo } from './todo.model';
 import { AppState } from '../state/app.state';
@@ -33,6 +33,10 @@ export class TodoComponent implements OnInit {
 
   deleteTodo(todo: Todo) {
     this.store.dispatch(deleteTodo({ id: todo.id }));
+  }
+
+  updateProgress(id: string, progress: 'active' | 'completed' | 'deleted' | 'postponed') {
+    this.store.dispatch(updateTodo({ id, progress }));
   }
 
   searchTodos() {
