@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './todo-rxjs/todo-rxjs-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
-
 import { DragDropModule } from '@angular/cdk/drag-drop';
+
+import { TodoRxjsModule } from './todo-rxjs/todo-rxjs.module';
 
 import { AppComponent } from './app.component';
 import { TodoComponent } from './todo/todo.component';
@@ -30,6 +32,8 @@ import { TodoEffects } from './state/todos/todo.effects';
     BrowserAnimationsModule,
     FormsModule,
     DragDropModule,
+    TodoRxjsModule,
+    AppRoutingModule,
     IonicStorageModule.forRoot(),
     StoreModule.forRoot({ todos: todoReducer }),
     StoreDevtoolsModule.instrument({
