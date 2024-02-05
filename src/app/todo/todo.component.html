@@ -5,58 +5,86 @@
         {{ currentDate | date:'EEE' }} {{ currentDate | date:'short' }} 
     </div>
 
+    <!-- Display Progress Bar -->
     <app-progressbar [progress]="cumulativeProgress"></app-progressbar>
 
+    <!-- Filter Search Todos -->
     <div class="input-group mb-3">
         <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="searchTodos()" placeholder="search for todo">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
     </div>
 
+    <!-- Input Create new Todo -->
     <div class="input-group mb-3">
         <input type="text" class="form-control" [(ngModel)]="todo" placeholder="create todo">
         <button class="btn btn-success" type="button" id="button-addon2" (click)="createTodo()"><i class="bi bi-plus"></i></button>
     </div>
 
+    <!-- Display Active Status Todos Outside the Accordion -->
+    <div *ngIf="allTodos$ | async as todos">
+        <div class="list-group mb-3">
+            <li *ngFor="let todo of getTodosByStatus(todos, 'active')" class="list-group-item todo-item d-flex mt-2" cdkDrag>
+                <label class="p-2 flex-grow-1">{{ todo.content }}</label>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-sm btn-danger" (click)="deleteTodo(todo)">
+                        <i class="bi bi-x"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-warning" (click)="updateProgress(todo.id, 'postponed')">
+                        <i class="bi bi-pause"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success" (click)="updateProgress(todo.id, 'completed')">
+                        <i class="bi bi-check2"></i>
+                    </button>
+                </div>
+            </li>
+        </div>
+    </div>
+
+    <!-- Display Accordions for Postponed and Completed Status Todos -->
     <div class="accordion" *ngIf="allTodos$ | async as todos">
         <div class="accordion-item" *ngFor="let status of todoStatuses; let index = index;">
-          <h2 class="accordion-header">
-            <button
-              class="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              aria-expanded="true"
-              aria-controls="accordion-panel-' + index"
-              [attr.data-bs-target]="'#accordion-panel-' + index">
-              {{ status | titlecase }} Todos
-            </button>
-          </h2>
+            <!-- Skip the Accordion for Active Status -->
+            <ng-container *ngIf="status !== 'active'">
+                <h2 class="accordion-header">
+                    <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    aria-expanded="true"
+                    aria-controls="accordion-panel-' + index"
+                    [attr.data-bs-target]="'#accordion-panel-' + index">
+                    {{ status | titlecase }} Todos
+                    </button>
+                </h2>
 
-          <div *ngFor="let todo of getTodosByStatus(todos, status); let i = index" 
-                class="accordion-collapse collapse show"
-                [attr.id]="'accordion-panel-' + index">
+                <div *ngFor="let todo of getTodosByStatus(todos, status); let i = index" 
+                        class="accordion-collapse collapse show"
+                        [attr.id]="'accordion-panel-' + index">
 
-                <div class="accordion-body">
-                    <div class="list-group">
-                        <li class="list-group-item todo-item d-flex" cdkDrag>
-                            <label class="p-2 flex-grow-1">{{ todo.content }}</label>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-sm btn-danger" (click)="deleteTodo(todo)">
-                                    <i class="bi bi-x"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-warning" (click)="updateProgress(todo.id, 'postponed')">
-                                    <i class="bi bi-pause"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-success" (click)="updateProgress(todo.id, 'completed')">
-                                    <i class="bi bi-check2"></i>
-                                </button>
+                        <div class="accordion-body">
+                            <div class="list-group">
+                                <li class="list-group-item todo-item d-flex" cdkDrag>
+                                    <label class="p-2 flex-grow-1">{{ todo.content }}</label>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-danger" (click)="deleteTodo(todo)">
+                                            <i class="bi bi-x"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-warning" (click)="updateProgress(todo.id, 'postponed')">
+                                            <i class="bi bi-pause"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-success" (click)="updateProgress(todo.id, 'completed')">
+                                            <i class="bi bi-check2"></i>
+                                        </button>
+                                    </div>
+                                </li>
                             </div>
-                        </li>
-                    </div>
+                        </div>
                 </div>
-          </div>
+            </ng-container>
         </div>
     </div>
       
+    <!-- Clear All Todos -->
     <div class="d-flex justify-content-center mt-4">
         <button type="button" class="btn btn-sm btn-danger" (click)="clearAllTodos()">Clear All Todos</button>
     </div>
