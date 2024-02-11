@@ -1,0 +1,28 @@
+<div class="container mt-5">
+    <h1 class="display-4 text-center">Your Simplest To Do List</h1>
+
+    <div class="mt-5 d-flex justify-content-end display-7">
+        {{ currentDate | date:'EEE' }} {{ currentDate | date:'short' }} 
+    </div>
+
+    <div class="input-group mb-3 mt-3">
+        <input type="text" class="form-control" [(ngModel)]="todo" placeholder="create todo">
+        <button class="btn btn-success" type="button" id="button-addon2" (click)="addTodo()"><i class="bi bi-plus"></i></button>
+    </div>
+
+
+    <div class="list-group mb-3">
+        <li *ngFor="let todo of allTodos$ | async" class="list-group-item todo-item d-flex mt-2" cdkDrag>
+            <label class="p-2 flex-grow-1">{{ todo.content }}</label>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-sm btn-danger" (click)="removeTodo(todo)">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+        </li>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-sm btn-danger" (click)="clearAllTodos()">Clear All Todos</button>
+    </div>
+</div>
