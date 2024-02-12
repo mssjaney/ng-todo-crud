@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './todo-rxjs/todo-rxjs-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
