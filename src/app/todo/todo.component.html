@@ -1,27 +1,27 @@
-<div class="container mt-5">
+<main class="container mt-5">
     <h1 class="display-4 text-center">Your Personal To Do List</h1>
 
-    <div class="mt-5 d-flex justify-content-end display-7">
+    <section class="mt-5 d-flex justify-content-end display-7">
         {{ currentDate | date:'EEE' }} {{ currentDate | date:'short' }} 
-    </div>
+    </section>
 
     <!-- Display Progress Bar -->
     <app-progressbar [progress]="cumulativeProgress"></app-progressbar>
 
     <!-- Filter Search Todos -->
-    <div class="input-group mb-3">
+    <section class="input-group mb-3">
         <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="searchTodos()" placeholder="search for todo">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
-    </div>
+    </section>
 
     <!-- Input Create new Todo -->
-    <div class="input-group mb-3">
+    <section class="input-group mb-3">
         <input type="text" class="form-control" [(ngModel)]="todo" placeholder="create todo">
         <button class="btn btn-success" type="button" id="button-addon2" (click)="createTodo()"><i class="bi bi-plus"></i></button>
-    </div>
+    </section>
 
     <!-- Display Active Status Todos Outside the Accordion -->
-    <div *ngIf="allTodos$ | async as todos">
+    <section *ngIf="allTodos$ | async as todos">
         <div class="list-group mb-3">
             <li *ngFor="let todo of getTodosByStatus(todos, 'active')" class="list-group-item todo-item d-flex mt-2" cdkDrag>
                 <label class="p-2 flex-grow-1">{{ todo.content }}</label>
@@ -38,10 +38,10 @@
                 </div>
             </li>
         </div>
-    </div>
+    </section>
 
     <!-- Display Accordions for Postponed and Completed Status Todos -->
-    <div class="accordion" *ngIf="allTodos$ | async as todos">
+    <section class="accordion" *ngIf="allTodos$ | async as todos">
         <div class="accordion-item" *ngFor="let status of todoStatuses; let index = index;">
             <!-- Skip the Accordion for Active Status -->
             <ng-container *ngIf="status !== 'active'">
@@ -82,10 +82,10 @@
                 </div>
             </ng-container>
         </div>
-    </div>
+    </section>
       
     <!-- Clear All Todos -->
     <div class="d-flex justify-content-center mt-4">
         <button type="button" class="btn btn-sm btn-danger" (click)="clearAllTodos()">Clear All Todos</button>
     </div>
-</div>
+</main>
