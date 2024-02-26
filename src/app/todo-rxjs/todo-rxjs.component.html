@@ -1,9 +1,9 @@
 <main class="container mt-5">
     <h1 class="display-4 text-center">Your Simplest To Do List</h1>
 
-    <secion class="mt-5 d-flex justify-content-end display-7">
+    <section class="mt-5 d-flex justify-content-end display-7">
         {{ currentDate | date:'EEE' }} {{ currentDate | date:'short' }} 
-    </secion>
+    </section>
 
     <section class="input-group mb-3 mt-3">
         <input type="text" class="form-control" [(ngModel)]="todo" placeholder="create todo">
@@ -17,6 +17,12 @@
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-sm btn-danger" (click)="removeTodo(todo)">
                     <i class="bi bi-x"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-warning">
+                    <i class="bi bi-pause"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-success">
+                    <i class="bi bi-check2"></i>
                 </button>
             </div>
         </li>
