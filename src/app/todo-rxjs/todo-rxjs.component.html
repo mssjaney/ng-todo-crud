@@ -2,30 +2,46 @@
     <h1 class="display-4 text-center">Your Simplest To Do List</h1>
 
     <section class="mt-5 d-flex justify-content-end display-7">
-        {{ currentDate | date:'EEE' }} {{ currentDate | date:'short' }} 
+        {{ currentDate | date:'EEE' }} {{ currentDate | date:'short' }}
     </section>
 
     <section class="input-group mb-3 mt-3">
         <input type="text" class="form-control" [(ngModel)]="todo" placeholder="create todo">
-        <button class="btn btn-success" type="button" id="button-addon2" (click)="addTodo()"><i class="bi bi-plus"></i></button>
+        <button class="btn btn-success" type="button" id="button-addon2" (click)="addTodo()"><i
+                class="bi bi-plus"></i></button>
     </section>
 
+    <section class="accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true"
+                    aria-controls="accordion-panel" [attr.data-bs-target]="'#accordion-panel'">
+                    Todos
+                </button>
+            </h2>
 
-    <section class="list-group mb-3">
-        <li *ngFor="let todo of allTodos$ | async" class="list-group-item todo-item d-flex mt-2" cdkDrag>
-            <label class="p-2 flex-grow-1">{{ todo.content }}</label>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-sm btn-danger" (click)="removeTodo(todo)">
-                    <i class="bi bi-x"></i>
-                </button>
-                <button type="button" class="btn btn-sm btn-warning">
-                    <i class="bi bi-pause"></i>
-                </button>
-                <button type="button" class="btn btn-sm btn-success">
-                    <i class="bi bi-check2"></i>
-                </button>
+            <div class="accordion-collapse collapse show" [attr.id]="'accordion-panel'">
+                <div class="accordion-body">
+                    <div class="list-group">
+                        <li *ngFor="let todo of allTodos$ | async" class="list-group-item todo-item d-flex mt-2"
+                            cdkDrag>
+                            <label class="p-2 flex-grow-1">{{ todo.content }}</label>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm btn-danger" (click)="removeTodo(todo)">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pause"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success">
+                                    <i class="bi bi-check2"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </div>
+                </div>
             </div>
-        </li>
+        </div>
     </section>
 
     <div class="d-flex justify-content-center mt-4">
